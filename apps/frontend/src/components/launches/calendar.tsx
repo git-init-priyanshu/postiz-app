@@ -634,9 +634,10 @@ export const CalendarColumn: FC<{
     return postList.slice(0, 3);
   }, [postList, showAll]);
 
-    useEffect(()=>{
-    if(!scrollRef.current) return;
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  useEffect(()=>{
+    if(scrollRef.current){
+      scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   },[list])
 
 
