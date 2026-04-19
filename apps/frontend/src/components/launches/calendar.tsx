@@ -586,6 +586,7 @@ export const CalendarColumn: FC<{
 }> = memo((props) => {
   const t = useT();
 
+  const firstRender = useRef(true);
   const scrollRef = useRef(null);
 
   const { getDate, randomHour } = props;
@@ -635,12 +636,14 @@ export const CalendarColumn: FC<{
   }, [postList, showAll]);
 
   useEffect(()=>{
-    if(scrollRef.current){
+    if(!firstRender.current){
+      return;
+    }
+    if(scrollRef.current && list?.length > 0){
       scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+      firstRender.current = false;
     }
   },[list])
-
-
 
   const isBeforeNow = useMemo(() => {
     const originalUtc = getDate.startOf('hour');
